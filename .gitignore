@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings
+debian
+target
+test-output
+*.swp
+/*.deb
