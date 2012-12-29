@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- services -->
+    <bean name="pipelineService" class="sk.openhouse.automation.pipelineui.service.impl.PipelineServiceImpl">
+        <constructor-arg name="projectClient" ref="projectClient" />
+        <constructor-arg name="versionClient" ref="versionClient" />
+        <constructor-arg name="buildClient" ref="buildClient" />
+        <constructor-arg name="phaseClient" ref="phaseClient" />
+    </bean>
+
+    <bean name="projectClient" class="sk.openhouse.automation.pipelineclient.impl.ProjectClientImpl">
+        <constructor-arg name="client" ref="client" />
+        <constructor-arg name="host" value="${pipeline.service.host}" />
+    </bean>
+
+    <bean name="versionClient" class="sk.openhouse.automation.pipelineclient.impl.VersionClientImpl">
+        <constructor-arg name="client" ref="client" />
+        <constructor-arg name="host" value="${pipeline.service.host}" />
+    </bean>
+
+    <bean name="buildClient" class="sk.openhouse.automation.pipelineclient.impl.BuildClientImpl">
+        <constructor-arg name="client" ref="client" />
+        <constructor-arg name="host" value="${pipeline.service.host}" />
+    </bean>
+
+    <bean name="phaseClient" class="sk.openhouse.automation.pipelineclient.impl.PhaseClientImpl">
+        <constructor-arg name="client" ref="client" />
+        <constructor-arg name="host" value="${pipeline.service.host}" />
+    </bean>
+
+    <bean id="client" class="com.sun.jersey.api.client.Client" factory-method="create" />
+</beans>

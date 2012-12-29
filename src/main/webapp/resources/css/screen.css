@@ -1,0 +1,77 @@
+body {
+    font-family: MuseoSans, Georgia, "Times New Roman", Times, serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #ffffff;
+    color: #444444;
+}
+
+.content {
+    position: relative;
+    margin: 0 auto;
+    width: 980px;
+    text-align: left;
+}
+
+form {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #B6B8B7;
+}
+
+select {
+    border: 1px solid #B6B8B7;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+td, th {
+    padding: 7px 12px;
+}
+
+th {
+    text-align: center;
+    font-size: 16px;
+}
+
+.label {
+    display: inline-block;
+    background-color: #EBCF77;
+    color: #fcfcfc;
+    width: 100%;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.build {
+    background-color: #ffffff;
+    border: 1px solid #B6B8B7;
+    color: #444444;
+    font-size: 16px;
+}
+
+.success {
+    background-color: #36D14D;
+}
+
+.fail {
+    background-color: #EC3939;
+}
+
+.smallprint {
+    font-size: 12px;
+    font-weight: normal;
+}
