@@ -1,0 +1,7 @@
+#!/bin/sh
+
+rm -f /etc/init.d/${PACKAGE}
+rm -f /opt/${PACKAGE}/web.xml
+rm -f /opt/${PACKAGE}/logs
+rm -f /opt/${PACKAGE}/conf
+rm -f /opt/${PACKAGE}/work

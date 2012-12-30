@@ -1,0 +1,12 @@
+#!/bin/sh
+
+chown tomcat7:tomcat7 /opt/${PACKAGE}/webapps
+chown tomcat7:adm /var/cache/${PACKAGE}
+chgrp tomcat7 /etc/${PACKAGE}/Standalone
+chmod 775 /etc/${PACKAGE}/Standalone
+
+ln -s /etc/init.d/oh-tomcat-app /etc/init.d/${PACKAGE}
+ln -s /var/log/${PACKAGE} /opt/${PACKAGE}/logs
+ln -s /etc/${PACKAGE} /opt/${PACKAGE}/conf
+ln -s /var/lib/tomcat7/conf/web.xml /etc/${PACKAGE}/web.xml
+ln -s /var/cache/${PACKAGE} /opt/${PACKAGE}/work

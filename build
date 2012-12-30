@@ -1,0 +1,57 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]
+then
+    echo "supply build number as the first argument"
+    exit 1
+fi
+
+build(){
+
+    POM=pom.xml
+    BKP_POM=pom.xml_bkp
+    VERSION=$1
+
+    # replace version in pom
+    cp ./$POM ./$BKP_POM
+    sed -i -e "s/\${VERSION}/$VERSION/g" ./$POM
+
+    # create target dir (binaries)
+    mvn clean install cobertura:cobertura
+
+    # revert pom back
+    mv $BKP_POM $POM
+}
+
+VERSION="0.1-$1"
+PACKAGE=oh-pipeline-ui
+TOPDIR=debian
+
+# mvn build
+build $VERSION
+
+# clean old deb directory
+rm -rf ./$TOPDIR
+
+# create deb tree
+APP_LOG_DIR=./$TOPDIR/var/log/$PACKAGE
+APP_CONF_DIR=./$TOPDIR/etc/default
+TOMCAT_CONF_DIR=./$TOPDIR/etc/$PACKAGE
+TOMCAT_WEB_DIR=./$TOPDIR/opt/$PACKAGE/webapps
+TOMACT_WORK_DIR=./$TOPDIR/var/cache/$PACKAGE
+
+mkdir -p $APP_LOG_DIR
+mkdir -p $APP_CONF_DIR
+mkdir -p $TOMCAT_CONF_DIR/Standalone
+mkdir -p $TOMCAT_WEB_DIR
+mkdir -p $TOMACT_WORK_DIR
+
+# set dir mode
+find ./$TOPDIR -type d | xargs chmod 755
+
+cp ./src/main/tomcat/conf/server.xml $TOMCAT_CONF_DIR
+cp -r ./target/${PACKAGE}-${VERSION}/* $TOMCAT_WEB_DIR
+cp ./src/main/conf/${PACKAGE} $APP_CONF_DIR
+
+# create deb package
+oh-deb-build $VERSION
