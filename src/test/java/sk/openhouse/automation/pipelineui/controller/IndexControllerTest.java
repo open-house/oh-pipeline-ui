@@ -124,6 +124,7 @@ public class IndexControllerTest {
 
     /**
      * Test if no project are returned from pipeline service
+     * @throws ConnectException 
      */
     @Test
     public void testGetHandlerNoProjects() {

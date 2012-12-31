@@ -35,6 +35,8 @@
                 <input type="submit" value="show" />
             </form>
 
+            <div class="error">${error}</div>
+
             <table>
                 <thead>
                     <tr>

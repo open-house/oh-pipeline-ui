@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.UniformInterfaceException;
+
 import sk.openhouse.automation.pipelineclient.BuildClient;
 import sk.openhouse.automation.pipelineclient.PhaseClient;
 import sk.openhouse.automation.pipelineclient.ProjectClient;
@@ -17,9 +22,12 @@ import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
 import sk.openhouse.automation.pipelinedomain.domain.response.StateResponse;
 import sk.openhouse.automation.pipelinedomain.domain.response.VersionResponse;
 import sk.openhouse.automation.pipelineui.model.Build;
+import sk.openhouse.automation.pipelineui.service.PipelineException;
 import sk.openhouse.automation.pipelineui.service.PipelineService;
 
 public class PipelineServiceImpl implements PipelineService {
+
+    private static final Logger logger = Logger.getLogger(PipelineServiceImpl.class);
 
     private ProjectClient projectClient;
     private VersionClient versionClient;
@@ -42,7 +50,20 @@ public class PipelineServiceImpl implements PipelineService {
     public List<String> getProjectNames() {
 
         List<String> projectNames = new ArrayList<String>();
-        List<ProjectResponse> projects = projectClient.getProjects().getProjects();
+        List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
+
+        try {
+            projects = projectClient.getProjects().getProjects();
+        } catch (UniformInterfaceException e) {
+            String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        } catch(ClientHandlerException e) {
+            String message = String.format("Failed to process HTTP Reqeust/Response - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        }
+
         for (ProjectResponse project : projects) {
             projectNames.add(project.getName());
         }
@@ -57,7 +78,20 @@ public class PipelineServiceImpl implements PipelineService {
     public List<String> getVersionNumbers(String projectName) {
 
         List<String> versionNumbers = new ArrayList<String>();
-        List<VersionResponse> versions = versionClient.getVersions(projectName).getVersions();
+        List<VersionResponse> versions = new ArrayList<VersionResponse>();
+
+        try {
+            versions = versionClient.getVersions(projectName).getVersions();
+        } catch (UniformInterfaceException e) {
+            String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        } catch(ClientHandlerException e) {
+            String message = String.format("Failed to process HTTP Reqeust/Response - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        }
+
         for (VersionResponse version : versions) {
             versionNumbers.add(version.getVersionNumber());
         }
@@ -72,7 +106,20 @@ public class PipelineServiceImpl implements PipelineService {
     public List<Build> getBuilds(String projectName, String versionNumber) {
 
         List<Build> builds = new ArrayList<Build>();
-        List<BuildResponse> buildResponses = buildClient.getBuilds(projectName, versionNumber).getBuilds();
+        List<BuildResponse> buildResponses = new ArrayList<BuildResponse>();
+
+        try {
+            buildResponses = buildClient.getBuilds(projectName, versionNumber).getBuilds();
+        } catch (UniformInterfaceException e) {
+            String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        } catch(ClientHandlerException e) {
+            String message = String.format("Failed to process HTTP Reqeust/Response - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        }
+
         for (BuildResponse buildResponse : buildResponses) {
             List<BuildPhaseResponse> buildPhases = buildResponse.getBuildPhases().getBuildPhases();
             Build build = new Build(buildResponse.getNumber(), getBuildStates(buildPhases));
@@ -89,7 +136,20 @@ public class PipelineServiceImpl implements PipelineService {
     public List<String> getPhaseNames(String projectName, String versionNumber) {
 
         List<String> phaseNames = new ArrayList<String>();
-        List<PhaseResponse> phases = phaseClient.getPhases(projectName, versionNumber).getPhases();
+        List<PhaseResponse> phases = new ArrayList<PhaseResponse>();
+
+        try {
+            phases = phaseClient.getPhases(projectName, versionNumber).getPhases();
+        } catch (UniformInterfaceException e) {
+            String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        } catch(ClientHandlerException e) {
+            String message = String.format("Failed to process HTTP Reqeust/Response - %s", e.getMessage());
+            logger.fatal(message);
+            throw new PipelineException(message, e);
+        }
+
         for (PhaseResponse phase : phases) {
             phaseNames.add(phase.getName());
         }

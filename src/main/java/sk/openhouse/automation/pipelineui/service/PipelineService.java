@@ -12,26 +12,30 @@ public interface PipelineService {
 
     /**
      * @return all project names
+     * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<String> getProjectNames();
+    List<String> getProjectNames() throws PipelineException;
 
     /**
      * @param projectName
      * @return all versions of the specified project
+     * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<String> getVersionNumbers(String projectName);
+    List<String> getVersionNumbers(String projectName) throws PipelineException;
 
     /**
      * @param projectName
      * @param versionNumber
      * @return all builds of the specified project and version
+     * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<Build> getBuilds(String projectName, String versionNumber);
+    List<Build> getBuilds(String projectName, String versionNumber) throws PipelineException;
 
     /**
      * @param projectName
      * @param versionNumber
      * @return phase names of the specified project and version
+     * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<String> getPhaseNames(String projectName, String versionNumber);
+    List<String> getPhaseNames(String projectName, String versionNumber) throws PipelineException;
 }

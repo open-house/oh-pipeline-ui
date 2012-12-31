@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
+import sk.openhouse.automation.pipelineui.service.PipelineException;
 import sk.openhouse.automation.pipelineui.service.PipelineService;
 
 @Controller
@@ -40,42 +41,19 @@ public class IndexController {
         mav.setViewName("index");
 
         /* default values */
-        mav.addObject("versions", new ArrayList<String>());
-        mav.addObject("builds", new ArrayList<Build>());
-        mav.addObject("phases", new ArrayList<String>());
-        mav.addObject("columnWidth", getColumnWidth(0));
+        setDefaultValues(mav);
 
-        /* no projects found */
-        List<String> projects = pipelineService.getProjectNames();
-        if (projects.isEmpty()) {
-            mav.addObject("projects", projects);
-            projectVersion.setProjectName(null);
-            projectVersion.setVersionNumber(null);
+        /* set projects */
+        if (!setProjects(mav, projectVersion)) {
             return mav;
         }
-        mav.addObject("projects", projects);
 
-        /* project name has not been set yet, or does not exist */
+        if (!setVersions(mav, projectVersion)) {
+            return mav;
+        }
+
         String selectedProjectName = projectVersion.getProjectName();
-        if (null == selectedProjectName || !projects.contains(selectedProjectName)) {
-            projectVersion.setProjectName(projects.get(0));
-            selectedProjectName = projectVersion.getProjectName();
-        }
-
-        /* no project versions found */
-        List<String> versions = pipelineService.getVersionNumbers(selectedProjectName);
-        if (versions.isEmpty()) {
-            projectVersion.setVersionNumber(null);
-            return mav;
-        }
-        mav.addObject("versions", versions);
-
-        /* version number has not been set yet or has been set to incorrect version */
         String selectedVersionNumber = projectVersion.getVersionNumber();
-        if (null == selectedVersionNumber || !versions.contains(selectedVersionNumber)) {
-            projectVersion.setVersionNumber(versions.get(0));
-            selectedVersionNumber = projectVersion.getVersionNumber();
-        }
 
         List<String> phaseNames = pipelineService.getPhaseNames(selectedProjectName, selectedVersionNumber);
         mav.addObject("builds", pipelineService.getBuilds(selectedProjectName, selectedVersionNumber));
@@ -83,6 +61,79 @@ public class IndexController {
 
         mav.addObject("columnWidth", getColumnWidth(phaseNames.size()));
         return mav;
+    }
+
+    /**
+     * Sets default model values on supplied mode and view
+     */
+    private void setDefaultValues(ModelAndView mav) {
+
+        mav.addObject("projects", new ArrayList<String>());
+        mav.addObject("versions", new ArrayList<String>());
+        mav.addObject("builds", new ArrayList<Build>());
+        mav.addObject("phases", new ArrayList<String>());
+        mav.addObject("columnWidth", getColumnWidth(0));
+    }
+
+    /**
+     * Sets projects on supplied model and view, sets selected project on supplied project version
+     * and returns true if successful, false otherwise
+     * 
+     * @param mav sets 'projects' on supplied model and view if true is returned
+     * @param projectVersion from user request (form)
+     * @return true if successful, false otherwise
+     */
+    private boolean setProjects(ModelAndView mav, ProjectVersion projectVersion) {
+
+        List<String> projects;
+        try {
+            projects = pipelineService.getProjectNames();
+        } catch (PipelineException e) {
+            mav.addObject("error", e.getMessage());
+            return false;
+        }
+
+        /* no projects found */
+        if (projects.isEmpty()) {
+            projectVersion.setProjectName(null);
+            projectVersion.setVersionNumber(null);
+            return false;
+        }
+        mav.addObject("projects", projects);
+
+        /* project name has not been set yet, or does not exist */
+        String selectedProjectName = projectVersion.getProjectName();
+        if (null == selectedProjectName || !projects.contains(selectedProjectName)) {
+            projectVersion.setProjectName(projects.get(0));
+        }
+        return true;
+    }
+
+    /**
+     * Sets versions on supplied model and view, sets selected version on supplied project version
+     * and returns true if successful, false otherwise
+     * 
+     * @param mav sets 'versions' on supplied model and view if true is returned
+     * @param projectVersion from user request (form)
+     * @return true if successful, false otherwise
+     */
+    public boolean setVersions(ModelAndView mav, ProjectVersion projectVersion) {
+
+        /* no project versions found */
+        String selectedProjectName = projectVersion.getProjectName();
+        List<String> versions = pipelineService.getVersionNumbers(selectedProjectName);
+        if (versions.isEmpty()) {
+            projectVersion.setVersionNumber(null);
+            return false;
+        }
+        mav.addObject("versions", versions);
+
+        /* version number has not been set yet or has been set to incorrect version */
+        String selectedVersionNumber = projectVersion.getVersionNumber();
+        if (null == selectedVersionNumber || !versions.contains(selectedVersionNumber)) {
+            projectVersion.setVersionNumber(versions.get(0));
+        }
+        return true;
     }
 
     /**
