@@ -41,7 +41,7 @@ public class IndexControllerTest {
         Mockito.when(pipelineService.getVersionNumbers(Mockito.eq("test"))).thenReturn(versions);
         Mockito.when(pipelineService.getPhaseNames(Mockito.eq("test"), Mockito.eq("0.3")))
                 .thenReturn(phases);
-        Mockito.when(pipelineService.getBuilds(Mockito.eq("test"), Mockito.eq("0.3")))
+        Mockito.when(pipelineService.getBuilds(Mockito.eq("test"), Mockito.eq("0.3"), Mockito.eq(10)))
                 .thenReturn(builds);
 
         indexController = new IndexController(pipelineService);

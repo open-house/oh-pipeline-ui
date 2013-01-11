@@ -103,13 +103,13 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
-    public List<Build> getBuilds(String projectName, String versionNumber) {
+    public List<Build> getBuilds(String projectName, String versionNumber, int limit) {
 
         List<Build> builds = new ArrayList<Build>();
         List<BuildResponse> buildResponses = new ArrayList<BuildResponse>();
 
         try {
-            buildResponses = buildClient.getBuilds(projectName, versionNumber).getBuilds();
+            buildResponses = buildClient.getBuilds(projectName, versionNumber, limit).getBuilds();
         } catch (UniformInterfaceException e) {
             String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
             logger.fatal(message);

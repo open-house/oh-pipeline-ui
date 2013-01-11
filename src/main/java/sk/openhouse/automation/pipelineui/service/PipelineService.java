@@ -26,10 +26,11 @@ public interface PipelineService {
     /**
      * @param projectName
      * @param versionNumber
-     * @return all builds of the specified project and version
+     * @param limit max number of returned builds
+     * @return number of builds specified by limit for specific project versino
      * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<Build> getBuilds(String projectName, String versionNumber) throws PipelineException;
+    List<Build> getBuilds(String projectName, String versionNumber, int limit) throws PipelineException;
 
     /**
      * @param projectName

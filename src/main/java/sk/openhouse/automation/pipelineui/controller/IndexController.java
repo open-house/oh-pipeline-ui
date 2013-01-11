@@ -20,7 +20,10 @@ import sk.openhouse.automation.pipelineui.service.PipelineService;
 @RequestMapping("/")
 public class IndexController {
 
+    /** relative size (to the rest of the columns) of the first column in builds table */
     private static final float FIRST_COL_WIDTH_RATIO = 1.5f;
+    /** maximum number of builds displayed on the page */
+    private static final int BUILDS_LIMIT = 10;
 
     private final PipelineService pipelineService;
 
@@ -56,7 +59,7 @@ public class IndexController {
         String selectedVersionNumber = projectVersion.getVersionNumber();
 
         List<String> phaseNames = pipelineService.getPhaseNames(selectedProjectName, selectedVersionNumber);
-        mav.addObject("builds", pipelineService.getBuilds(selectedProjectName, selectedVersionNumber));
+        mav.addObject("builds", pipelineService.getBuilds(selectedProjectName, selectedVersionNumber, BUILDS_LIMIT));
         mav.addObject("phases", phaseNames);
 
         mav.addObject("columnWidth", getColumnWidth(phaseNames.size()));
