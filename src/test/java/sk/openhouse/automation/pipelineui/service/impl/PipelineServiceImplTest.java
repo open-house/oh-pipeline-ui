@@ -173,7 +173,7 @@ public class PipelineServiceImplTest {
         BuildsResponse buildsResponse = new BuildsResponse();
         buildsResponse.setBuilds(builds);
 
-        Mockito.when(buildClient.getBuilds("test", "0.3", 10)).thenReturn(buildsResponse);
+        Mockito.when(buildClient.getBuilds("test", "0.3")).thenReturn(buildsResponse);
 
         List<Build> buildModels = pipelineServiceImpl.getBuilds("test", "0.3", 10);
         Assert.assertEquals(buildModels.size(), 1);
@@ -216,7 +216,7 @@ public class PipelineServiceImplTest {
         BuildsResponse buildsResponse = new BuildsResponse();
         buildsResponse.setBuilds(builds);
 
-        Mockito.when(buildClient.getBuilds("test", "0.3", 10)).thenReturn(buildsResponse);
+        Mockito.when(buildClient.getBuilds("test", "0.3")).thenReturn(buildsResponse);
 
         List<Build> buildModels = pipelineServiceImpl.getBuilds("test", "0.3", 10);
         Assert.assertEquals(buildModels.size(), 1);
@@ -229,7 +229,7 @@ public class PipelineServiceImplTest {
     @Test(expectedExceptions = PipelineException.class)
     public void testGetBuildsUniformInterfaceException() {
 
-        Mockito.when(buildClient.getBuilds(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt()))
+        Mockito.when(buildClient.getBuilds(Mockito.anyString(), Mockito.anyString()))
                 .thenThrow(UniformInterfaceException.class);
         pipelineServiceImpl.getBuilds("test", "0.1", 10);
     }
@@ -238,7 +238,7 @@ public class PipelineServiceImplTest {
     @Test(expectedExceptions = PipelineException.class)
     public void testGetBuildsClientHandlerException() {
 
-        Mockito.when(buildClient.getBuilds(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt()))
+        Mockito.when(buildClient.getBuilds(Mockito.anyString(), Mockito.anyString()))
                 .thenThrow(ClientHandlerException.class);
         pipelineServiceImpl.getBuilds("test", "0.1", 10);
     }
