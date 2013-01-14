@@ -109,7 +109,9 @@ public class PipelineServiceImpl implements PipelineService {
         List<BuildResponse> buildResponses = new ArrayList<BuildResponse>();
 
         try {
-            buildResponses = buildClient.getBuilds(projectName, versionNumber, limit).getBuilds();
+            // TODO - enable when fixed in pipeline service
+            //buildResponses = buildClient.getBuilds(projectName, versionNumber, limit).getBuilds();
+            buildResponses = buildClient.getBuilds(projectName, versionNumber).getBuilds();
         } catch (UniformInterfaceException e) {
             String message = String.format("Unexpected response from pipeline service - %s", e.getMessage());
             logger.fatal(message);
