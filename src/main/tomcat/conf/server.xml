@@ -39,14 +39,14 @@
             connectionTimeout="20000"
             URIEncoding="UTF-8"
             redirectPort="8443" />
-        <Engine name="Standalone" defaultHost="localhost" debug="0">
+        <Engine name="Standalone" defaultHost="localhost">
 
             <Realm className="org.apache.catalina.realm.LockOutRealm">
                 <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase" />
             </Realm>
 
             <Host name="localhost" appBase="webapps" autoDeploy="true">
-                <Context path="" debug="0" docBase="." />
+                <Context path="" docBase="." />
 
                 <Valve className="org.apache.catalina.valves.AccessLogValve" 
                     directory="/var/log/oh-pipeline-ui"
