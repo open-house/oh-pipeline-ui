@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <oh.pipeline.client.version>0.1-1</oh.pipeline.client.version>
+        <oh.pipeline.client.version>0.1-2</oh.pipeline.client.version>
         <spring.version>3.1.3.RELEASE</spring.version>
         <commons.version>3.1</commons.version>
         <jstl.version>1.2</jstl.version>
