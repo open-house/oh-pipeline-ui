@@ -88,12 +88,11 @@ public class IndexController {
      */
     private boolean setProjects(ModelAndView mav, ProjectVersion projectVersion) {
 
-        List<String> projects;
+        List<String> projects = new ArrayList<String>();
         try {
             projects = pipelineService.getProjectNames();
         } catch (PipelineException e) {
             mav.addObject("error", e.getMessage());
-            return false;
         }
 
         /* no projects found */

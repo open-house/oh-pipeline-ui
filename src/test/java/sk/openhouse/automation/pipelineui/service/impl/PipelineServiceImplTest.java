@@ -204,6 +204,13 @@ public class PipelineServiceImplTest {
         phase.setStates(states);
         phases.add(phase);
 
+        BuildPhaseResponse phase2 = new BuildPhaseResponse();
+        phase2.setName("NXT");
+        StatesResponse noStates = new StatesResponse();
+        noStates.setStates(new ArrayList<StateResponse>());
+        phase2.setStates(noStates);
+        phases.add(phase2);
+
         BuildPhasesResponse buildPhases = new BuildPhasesResponse();
         buildPhases.setBuildPhases(phases);
 
@@ -221,8 +228,9 @@ public class PipelineServiceImplTest {
         List<Build> buildModels = pipelineServiceImpl.getBuilds("test", "0.3", 10);
         Assert.assertEquals(buildModels.size(), 1);
         Assert.assertEquals(buildModels.get(0).getNumber(), 7);
-        Assert.assertEquals(buildModels.get(0).getStates().size(), 1);
+        Assert.assertEquals(buildModels.get(0).getStates().size(), 2);
         Assert.assertEquals(buildModels.get(0).getStates().get("QA"), PhaseState.SUCCESS);
+        Assert.assertEquals(buildModels.get(0).getStates().get("NXT"), null);
     }
 
     @SuppressWarnings("unchecked")

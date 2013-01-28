@@ -17,6 +17,7 @@ import sk.openhouse.automation.pipelinedomain.domain.PhaseState;
 import sk.openhouse.automation.pipelineui.controller.IndexController;
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
+import sk.openhouse.automation.pipelineui.service.PipelineException;
 import sk.openhouse.automation.pipelineui.service.PipelineService;
 
 public class IndexControllerTest {
@@ -120,6 +121,29 @@ public class IndexControllerTest {
 
         Assert.assertEquals(projectVersion.getProjectName(), "test");
         Assert.assertEquals(projectVersion.getVersionNumber(), "0.3");
+    }
+
+    /**
+     * Test if getProjectNames throws pipeline exception
+     * @throws ConnectException 
+     */
+    @Test
+    public void testGetHandlerGetProjectsException() {
+
+        Mockito.when(pipelineService.getProjectNames()).thenThrow(new PipelineException("test", new Exception()));
+
+        ProjectVersion projectVersion = new ProjectVersion();
+        projectVersion.setProjectName("test");
+        projectVersion.setVersionNumber("0.3");
+        ModelAndView mav = indexController.getHandler(projectVersion);
+
+        Assert.assertEquals(mav.getModelMap().get("projects"), new ArrayList<String>());
+        Assert.assertEquals(mav.getModelMap().get("versions"), new ArrayList<String>());
+        Assert.assertEquals(mav.getModelMap().get("phases"), new ArrayList<String>());
+        Assert.assertEquals(mav.getModelMap().get("builds"), new ArrayList<String>());
+
+        Assert.assertNull(projectVersion.getProjectName());
+        Assert.assertNull(projectVersion.getVersionNumber());
     }
 
     /**
