@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
 import sk.openhouse.automation.pipelineui.service.PipelineException;
@@ -88,9 +89,9 @@ public class IndexController {
      */
     private boolean setProjects(ModelAndView mav, ProjectVersion projectVersion) {
 
-        List<String> projects = new ArrayList<String>();
+        List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
         try {
-            projects = pipelineService.getProjectNames();
+            projects = pipelineService.getProjects();
         } catch (PipelineException e) {
             mav.addObject("error", e.getMessage());
         }
@@ -106,7 +107,7 @@ public class IndexController {
         /* project name has not been set yet, or does not exist */
         String selectedProjectName = projectVersion.getProjectName();
         if (null == selectedProjectName || !projects.contains(selectedProjectName)) {
-            projectVersion.setProjectName(projects.get(0));
+            projectVersion.setProjectName(projects.get(0).getName());
         }
         return true;
     }

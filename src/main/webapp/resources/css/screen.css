@@ -8,6 +8,10 @@ body {
     color: #444444;
 }
 
+a.settings {
+    float: right;
+}
+
 .content {
     position: relative;
     margin: 0 auto;
@@ -15,10 +19,19 @@ body {
     text-align: left;
 }
 
-form {
-    padding-top: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #B6B8B7;
+form.filter {
+    padding: 10px 12px;
+    display: inline-block;
+}
+
+hr {
+    border: 1px solid #B6B8B7;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    height: 1px;
+    padding: 0;
+    margin: 0;
 }
 
 select {
@@ -28,6 +41,14 @@ select {
     padding: 3px 7px;
     font-size: 14px;
     font-weight: bold;
+}
+
+input[type=submit] {
+    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+    border: 1px solid #B6B8B7;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 14px;
 }
 
 table {

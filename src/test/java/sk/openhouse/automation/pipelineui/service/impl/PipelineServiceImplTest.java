@@ -71,9 +71,9 @@ public class PipelineServiceImplTest {
 
         Mockito.when(projectClient.getProjects()).thenReturn(projectsResponse);
 
-        List<String> projectNames = pipelineServiceImpl.getProjectNames();
+        List<ProjectResponse> projectNames = pipelineServiceImpl.getProjects();
         Assert.assertEquals(projectNames.size(), 1);
-        Assert.assertEquals(projectNames.get(0), "test project");
+        Assert.assertEquals(projectNames.get(0).getName(), "test project");
     }
 
     @SuppressWarnings("unchecked")
@@ -81,7 +81,7 @@ public class PipelineServiceImplTest {
     public void testGetProjectNamesUniformInterfaceException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(UniformInterfaceException.class);
-        pipelineServiceImpl.getProjectNames();
+        pipelineServiceImpl.getProjects();
     }
 
     @SuppressWarnings("unchecked")
@@ -89,7 +89,7 @@ public class PipelineServiceImplTest {
     public void testGetProjectNamesClientHandlerException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(ClientHandlerException.class);
-        pipelineServiceImpl.getProjectNames();
+        pipelineServiceImpl.getProjects();
     }
 
     @Test

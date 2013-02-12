@@ -2,6 +2,7 @@ package sk.openhouse.automation.pipelineui.service;
 
 import java.util.List;
 
+import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
 import sk.openhouse.automation.pipelineui.model.Build;
 
 /**
@@ -11,10 +12,10 @@ import sk.openhouse.automation.pipelineui.model.Build;
 public interface PipelineService {
 
     /**
-     * @return all project names
+     * @return all projects
      * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<String> getProjectNames() throws PipelineException;
+    List<ProjectResponse> getProjects() throws PipelineException;
 
     /**
      * @param projectName

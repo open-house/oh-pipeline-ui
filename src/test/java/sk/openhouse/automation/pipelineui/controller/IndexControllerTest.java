@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import sk.openhouse.automation.pipelinedomain.domain.PhaseState;
+import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
 import sk.openhouse.automation.pipelineui.controller.IndexController;
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
@@ -25,7 +26,7 @@ public class IndexControllerTest {
     @Mock
     private PipelineService pipelineService;
 
-    private List<String> projects = new ArrayList<String>();
+    private List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
     private List<String> versions = new ArrayList<String>();
     private List<String> phases = new ArrayList<String>();
 
@@ -38,7 +39,7 @@ public class IndexControllerTest {
     public void beforeMethod() {
 
         MockitoAnnotations.initMocks(this);
-        Mockito.when(pipelineService.getProjectNames()).thenReturn(projects);
+        Mockito.when(pipelineService.getProjects()).thenReturn(projects);
         Mockito.when(pipelineService.getVersionNumbers(Mockito.eq("test"))).thenReturn(versions);
         Mockito.when(pipelineService.getPhaseNames(Mockito.eq("test"), Mockito.eq("0.3")))
                 .thenReturn(phases);
@@ -46,7 +47,10 @@ public class IndexControllerTest {
                 .thenReturn(builds);
 
         indexController = new IndexController(pipelineService);
-        projects.add("test");
+
+        ProjectResponse projectResponse = new ProjectResponse();
+        projectResponse.setName("test");
+        projects.add(projectResponse);
         versions.add("0.3");
         phases.add("QA");
 
@@ -125,12 +129,12 @@ public class IndexControllerTest {
 
     /**
      * Test if getProjectNames throws pipeline exception
-     * @throws ConnectException 
+     * @throws PipelineException
      */
     @Test
     public void testGetHandlerGetProjectsException() {
 
-        Mockito.when(pipelineService.getProjectNames()).thenThrow(new PipelineException("test", new Exception()));
+        Mockito.when(pipelineService.getProjects()).thenThrow(new PipelineException("test", new Exception()));
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");
@@ -148,12 +152,11 @@ public class IndexControllerTest {
 
     /**
      * Test if no project are returned from pipeline service
-     * @throws ConnectException 
      */
     @Test
     public void testGetHandlerNoProjects() {
 
-        Mockito.when(pipelineService.getProjectNames()).thenReturn(new ArrayList<String>());
+        Mockito.when(pipelineService.getProjects()).thenReturn(new ArrayList<ProjectResponse>());
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");

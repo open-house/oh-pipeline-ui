@@ -11,12 +11,12 @@
     <body>
         <div class="content">
 
-            <form>
+            <form class="filter">
                 <spring:bind path="projectVersion.projectName">
                     <select id="${status.expression}" name="${status.expression}">
                         <c:forEach items="${projects}" var="project" varStatus="loop">
-                            <option value="${project}"<c:if test="${project == status.value}"> selected="selected"</c:if>>
-                                ${project}
+                            <option value="${project.name}"<c:if test="${project.name == status.value}"> selected="selected"</c:if>>
+                                ${project.name}
                             </option>
                         </c:forEach>
                     </select>
@@ -35,6 +35,9 @@
                 <input type="submit" value="show" />
             </form>
 
+            <a href="/settings" class="settings">settings</a>
+
+            <hr />
             <div class="error">${error}</div>
 
             <table>

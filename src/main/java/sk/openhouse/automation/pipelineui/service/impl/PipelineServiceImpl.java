@@ -47,11 +47,9 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
-    public List<String> getProjectNames() {
+    public List<ProjectResponse> getProjects() {
 
-        List<String> projectNames = new ArrayList<String>();
         List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
-
         try {
             projects = projectClient.getProjects().getProjects();
         } catch (UniformInterfaceException e) {
@@ -64,11 +62,7 @@ public class PipelineServiceImpl implements PipelineService {
             throw new PipelineException(message, e);
         }
 
-        for (ProjectResponse project : projects) {
-            projectNames.add(project.getName());
-        }
-
-        return projectNames;
+        return projects;
     }
 
     /**
