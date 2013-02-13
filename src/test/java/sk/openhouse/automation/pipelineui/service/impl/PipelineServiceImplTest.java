@@ -105,9 +105,9 @@ public class PipelineServiceImplTest {
 
         Mockito.when(versionClient.getVersions("test")).thenReturn(versionsResponse);
 
-        List<String> versionNumbers = pipelineServiceImpl.getVersionNumbers("test");
+        List<VersionResponse> versionNumbers = pipelineServiceImpl.getVersions("test");
         Assert.assertEquals(versionNumbers.size(), 1);
-        Assert.assertEquals(versionNumbers.get(0), "0.7");
+        Assert.assertEquals(versionNumbers.get(0).getVersionNumber(), "0.7");
     }
 
     @SuppressWarnings("unchecked")
@@ -115,7 +115,7 @@ public class PipelineServiceImplTest {
     public void testGetVersionNumbersUniformInterfaceException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(UniformInterfaceException.class);
-        pipelineServiceImpl.getVersionNumbers("test");
+        pipelineServiceImpl.getVersions("test");
     }
 
     @SuppressWarnings("unchecked")
@@ -123,7 +123,7 @@ public class PipelineServiceImplTest {
     public void testGetVersionNumbersClientHandlerException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(ClientHandlerException.class);
-        pipelineServiceImpl.getVersionNumbers("test");
+        pipelineServiceImpl.getVersions("test");
     }
 
     @Test

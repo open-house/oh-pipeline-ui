@@ -3,6 +3,7 @@ package sk.openhouse.automation.pipelineui.service;
 import java.util.List;
 
 import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
+import sk.openhouse.automation.pipelinedomain.domain.response.VersionResponse;
 import sk.openhouse.automation.pipelineui.model.Build;
 
 /**
@@ -22,7 +23,7 @@ public interface PipelineService {
      * @return all versions of the specified project
      * @throws PipelineException if the response cannot be retrieved from pipeline service
      */
-    List<String> getVersionNumbers(String projectName) throws PipelineException;
+    List<VersionResponse> getVersions(String projectName) throws PipelineException;
 
     /**
      * @param projectName

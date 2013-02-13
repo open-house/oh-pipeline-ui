@@ -25,8 +25,8 @@
                 <spring:bind path="projectVersion.versionNumber">
                     <select id="${status.expression}" name="${status.expression}">
                         <c:forEach items="${versions}" var="version" varStatus="loop">
-                            <option value="${version}"<c:if test="${version == status.value}"> selected="selected"</c:if>>
-                                ${version}
+                            <option value="${version.versionNumber}"<c:if test="${version.versionNumber == status.value}"> selected="selected"</c:if>>
+                                ${version.versionNumber}
                             </option>
                         </c:forEach>
                     </select>

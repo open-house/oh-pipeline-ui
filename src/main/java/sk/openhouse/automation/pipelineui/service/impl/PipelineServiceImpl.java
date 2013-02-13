@@ -49,7 +49,7 @@ public class PipelineServiceImpl implements PipelineService {
     @Override
     public List<ProjectResponse> getProjects() {
 
-        List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
+        List<ProjectResponse> projects;
         try {
             projects = projectClient.getProjects().getProjects();
         } catch (UniformInterfaceException e) {
@@ -69,11 +69,9 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
-    public List<String> getVersionNumbers(String projectName) {
+    public List<VersionResponse> getVersions(String projectName) {
 
-        List<String> versionNumbers = new ArrayList<String>();
-        List<VersionResponse> versions = new ArrayList<VersionResponse>();
-
+        List<VersionResponse> versions;
         try {
             versions = versionClient.getVersions(projectName).getVersions();
         } catch (UniformInterfaceException e) {
@@ -86,11 +84,7 @@ public class PipelineServiceImpl implements PipelineService {
             throw new PipelineException(message, e);
         }
 
-        for (VersionResponse version : versions) {
-            versionNumbers.add(version.getVersionNumber());
-        }
-
-        return versionNumbers;
+        return versions;
     }
 
     /**

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
+import sk.openhouse.automation.pipelinedomain.domain.response.VersionResponse;
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
 import sk.openhouse.automation.pipelineui.service.PipelineException;
@@ -105,8 +106,9 @@ public class IndexController {
         mav.addObject("projects", projects);
 
         /* project name has not been set yet, or does not exist */
-        String selectedProjectName = projectVersion.getProjectName();
-        if (null == selectedProjectName || !projects.contains(selectedProjectName)) {
+        ProjectResponse selectedProject = new ProjectResponse();
+        selectedProject.setName(projectVersion.getProjectName());
+        if (!projects.contains(selectedProject)) {
             projectVersion.setProjectName(projects.get(0).getName());
         }
         return true;
@@ -124,7 +126,7 @@ public class IndexController {
 
         /* no project versions found */
         String selectedProjectName = projectVersion.getProjectName();
-        List<String> versions = pipelineService.getVersionNumbers(selectedProjectName);
+        List<VersionResponse> versions = pipelineService.getVersions(selectedProjectName);
         if (versions.isEmpty()) {
             projectVersion.setVersionNumber(null);
             return false;
@@ -132,9 +134,10 @@ public class IndexController {
         mav.addObject("versions", versions);
 
         /* version number has not been set yet or has been set to incorrect version */
-        String selectedVersionNumber = projectVersion.getVersionNumber();
-        if (null == selectedVersionNumber || !versions.contains(selectedVersionNumber)) {
-            projectVersion.setVersionNumber(versions.get(0));
+        VersionResponse selectedVersion = new VersionResponse();
+        selectedVersion.setVersionNumber(projectVersion.getVersionNumber());
+        if (!versions.contains(selectedVersion)) {
+            projectVersion.setVersionNumber(versions.get(0).getVersionNumber());
         }
         return true;
     }

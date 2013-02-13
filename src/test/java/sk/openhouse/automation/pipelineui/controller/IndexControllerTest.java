@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import sk.openhouse.automation.pipelinedomain.domain.PhaseState;
 import sk.openhouse.automation.pipelinedomain.domain.response.ProjectResponse;
+import sk.openhouse.automation.pipelinedomain.domain.response.VersionResponse;
 import sk.openhouse.automation.pipelineui.controller.IndexController;
 import sk.openhouse.automation.pipelineui.form.ProjectVersion;
 import sk.openhouse.automation.pipelineui.model.Build;
@@ -27,7 +28,7 @@ public class IndexControllerTest {
     private PipelineService pipelineService;
 
     private List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
-    private List<String> versions = new ArrayList<String>();
+    private List<VersionResponse> versions = new ArrayList<VersionResponse>();
     private List<String> phases = new ArrayList<String>();
 
     Map<String, PhaseState> states = new HashMap<String, PhaseState>();
@@ -40,7 +41,7 @@ public class IndexControllerTest {
 
         MockitoAnnotations.initMocks(this);
         Mockito.when(pipelineService.getProjects()).thenReturn(projects);
-        Mockito.when(pipelineService.getVersionNumbers(Mockito.eq("test"))).thenReturn(versions);
+        Mockito.when(pipelineService.getVersions(Mockito.eq("test"))).thenReturn(versions);
         Mockito.when(pipelineService.getPhaseNames(Mockito.eq("test"), Mockito.eq("0.3")))
                 .thenReturn(phases);
         Mockito.when(pipelineService.getBuilds(Mockito.eq("test"), Mockito.eq("0.3"), Mockito.eq(10)))
@@ -51,7 +52,10 @@ public class IndexControllerTest {
         ProjectResponse projectResponse = new ProjectResponse();
         projectResponse.setName("test");
         projects.add(projectResponse);
-        versions.add("0.3");
+
+        VersionResponse versionResponse = new VersionResponse();
+        versionResponse.setVersionNumber("0.3");
+        versions.add(versionResponse);
         phases.add("QA");
 
         states.put("QA", PhaseState.FAIL);
@@ -178,7 +182,7 @@ public class IndexControllerTest {
     @Test
     public void testGetHandlerNoVersions() {
 
-        Mockito.when(pipelineService.getVersionNumbers(Mockito.anyString())).thenReturn(new ArrayList<String>());
+        Mockito.when(pipelineService.getVersions(Mockito.anyString())).thenReturn(new ArrayList<VersionResponse>());
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");
