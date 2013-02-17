@@ -27,12 +27,12 @@ public class IndexControllerTest {
     @Mock
     private PipelineService pipelineService;
 
-    private List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
-    private List<VersionResponse> versions = new ArrayList<VersionResponse>();
-    private List<String> phases = new ArrayList<String>();
+    private final List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
+    private final List<VersionResponse> versions = new ArrayList<VersionResponse>();
+    private final List<String> phases = new ArrayList<String>();
 
-    Map<String, PhaseState> states = new HashMap<String, PhaseState>();
-    private List<Build> builds = new ArrayList<Build>();
+    private final Map<String, PhaseState> states = new HashMap<String, PhaseState>();
+    private final List<Build> builds = new ArrayList<Build>();
 
     private IndexController indexController;
 
@@ -40,8 +40,8 @@ public class IndexControllerTest {
     public void beforeMethod() {
 
         MockitoAnnotations.initMocks(this);
-        Mockito.when(pipelineService.getProjects()).thenReturn(projects);
-        Mockito.when(pipelineService.getVersions(Mockito.eq("test"))).thenReturn(versions);
+        Mockito.when(pipelineService.getProjectResponses()).thenReturn(projects);
+        Mockito.when(pipelineService.getVersionResponses(Mockito.eq("test"))).thenReturn(versions);
         Mockito.when(pipelineService.getPhaseNames(Mockito.eq("test"), Mockito.eq("0.3")))
                 .thenReturn(phases);
         Mockito.when(pipelineService.getBuilds(Mockito.eq("test"), Mockito.eq("0.3"), Mockito.eq(10)))
@@ -138,7 +138,7 @@ public class IndexControllerTest {
     @Test
     public void testGetHandlerGetProjectsException() {
 
-        Mockito.when(pipelineService.getProjects()).thenThrow(new PipelineException("test", new Exception()));
+        Mockito.when(pipelineService.getProjectResponses()).thenThrow(new PipelineException("test", new Exception()));
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");
@@ -160,7 +160,7 @@ public class IndexControllerTest {
     @Test
     public void testGetHandlerNoProjects() {
 
-        Mockito.when(pipelineService.getProjects()).thenReturn(new ArrayList<ProjectResponse>());
+        Mockito.when(pipelineService.getProjectResponses()).thenReturn(new ArrayList<ProjectResponse>());
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");
@@ -182,7 +182,7 @@ public class IndexControllerTest {
     @Test
     public void testGetHandlerNoVersions() {
 
-        Mockito.when(pipelineService.getVersions(Mockito.anyString())).thenReturn(new ArrayList<VersionResponse>());
+        Mockito.when(pipelineService.getVersionResponses(Mockito.anyString())).thenReturn(new ArrayList<VersionResponse>());
 
         ProjectVersion projectVersion = new ProjectVersion();
         projectVersion.setProjectName("test");

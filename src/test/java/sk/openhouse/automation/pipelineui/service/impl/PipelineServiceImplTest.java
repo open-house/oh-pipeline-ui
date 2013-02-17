@@ -71,7 +71,7 @@ public class PipelineServiceImplTest {
 
         Mockito.when(projectClient.getProjects()).thenReturn(projectsResponse);
 
-        List<ProjectResponse> projectNames = pipelineServiceImpl.getProjects();
+        List<ProjectResponse> projectNames = pipelineServiceImpl.getProjectResponses();
         Assert.assertEquals(projectNames.size(), 1);
         Assert.assertEquals(projectNames.get(0).getName(), "test project");
     }
@@ -81,7 +81,7 @@ public class PipelineServiceImplTest {
     public void testGetProjectNamesUniformInterfaceException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(UniformInterfaceException.class);
-        pipelineServiceImpl.getProjects();
+        pipelineServiceImpl.getProjectResponses();
     }
 
     @SuppressWarnings("unchecked")
@@ -89,7 +89,7 @@ public class PipelineServiceImplTest {
     public void testGetProjectNamesClientHandlerException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(ClientHandlerException.class);
-        pipelineServiceImpl.getProjects();
+        pipelineServiceImpl.getProjectResponses();
     }
 
     @Test
@@ -105,7 +105,7 @@ public class PipelineServiceImplTest {
 
         Mockito.when(versionClient.getVersions("test")).thenReturn(versionsResponse);
 
-        List<VersionResponse> versionNumbers = pipelineServiceImpl.getVersions("test");
+        List<VersionResponse> versionNumbers = pipelineServiceImpl.getVersionResponses("test");
         Assert.assertEquals(versionNumbers.size(), 1);
         Assert.assertEquals(versionNumbers.get(0).getVersionNumber(), "0.7");
     }
@@ -115,7 +115,7 @@ public class PipelineServiceImplTest {
     public void testGetVersionNumbersUniformInterfaceException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(UniformInterfaceException.class);
-        pipelineServiceImpl.getVersions("test");
+        pipelineServiceImpl.getVersionResponses("test");
     }
 
     @SuppressWarnings("unchecked")
@@ -123,7 +123,7 @@ public class PipelineServiceImplTest {
     public void testGetVersionNumbersClientHandlerException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(ClientHandlerException.class);
-        pipelineServiceImpl.getVersions("test");
+        pipelineServiceImpl.getVersionResponses("test");
     }
 
     @Test

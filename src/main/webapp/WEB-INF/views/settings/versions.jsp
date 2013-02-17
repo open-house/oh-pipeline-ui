@@ -11,14 +11,17 @@
         <div class="content">
 
             <form method="POST">
-                <input type="text" name="project-name" id="project-name" value="" />
-                <input type="submit" value="add new project" />
+                <select name="project-name" id="project-name">
+                    <option value="TODO">TODO</option>
+                </select>
+                <input type="text" name="version-number" id="version-number" value="" />
+                <input type="submit" value="add new version" />
             </form>
 
             <hr />
 
-            <c:forEach items="${projects}" var="project" varStatus="loop">
-                ${project.name}
+            <c:forEach items="${versions}" var="version" varStatus="loop">
+                ${version.versionNumber}
                 <br />
             </c:forEach>
         </div><!-- .content -->

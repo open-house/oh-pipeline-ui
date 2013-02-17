@@ -25,7 +25,7 @@ public class ProjectsSettingsControllerTest {
     public void getHandler() {
 
         controller.getHandler();
-        Mockito.verify(pipelineService, Mockito.times(1)).getProjects();
+        Mockito.verify(pipelineService, Mockito.times(1)).getProjectResponses();
     }
 
 }

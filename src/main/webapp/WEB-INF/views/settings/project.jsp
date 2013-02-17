@@ -11,16 +11,17 @@
         <div class="content">
 
             <form method="POST">
-                <input type="text" name="project-name" id="project-name" value="" />
-                <input type="submit" value="add new project" />
+                // TODO - add new version is through versions, this is for changing project name
+                <select name="project-name" id="project-name">
+                    <option>TODO</option>
+                    <option>TODO2</option>
+                </select>
+                <input type="text" name="version-number" id="version-number" value="" />
+                <input type="submit" value="add new version" />
             </form>
 
             <hr />
 
-            <c:forEach items="${projects}" var="project" varStatus="loop">
-                ${project.name}
-                <br />
-            </c:forEach>
         </div><!-- .content -->
     </body>
 </html>

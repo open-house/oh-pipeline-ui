@@ -47,7 +47,7 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
-    public List<ProjectResponse> getProjects() {
+    public List<ProjectResponse> getProjectResponses() {
 
         List<ProjectResponse> projects;
         try {
@@ -69,7 +69,7 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
-    public List<VersionResponse> getVersions(String projectName) {
+    public List<VersionResponse> getVersionResponses(String projectName) {
 
         List<VersionResponse> versions;
         try {

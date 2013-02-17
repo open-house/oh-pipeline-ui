@@ -92,7 +92,7 @@ public class IndexController {
 
         List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
         try {
-            projects = pipelineService.getProjects();
+            projects = pipelineService.getProjectResponses();
         } catch (PipelineException e) {
             mav.addObject("error", e.getMessage());
         }
@@ -122,11 +122,11 @@ public class IndexController {
      * @param projectVersion from user request (form)
      * @return true if successful, false otherwise
      */
-    public boolean setVersions(ModelAndView mav, ProjectVersion projectVersion) {
+    boolean setVersions(ModelAndView mav, ProjectVersion projectVersion) {
 
         /* no project versions found */
         String selectedProjectName = projectVersion.getProjectName();
-        List<VersionResponse> versions = pipelineService.getVersions(selectedProjectName);
+        List<VersionResponse> versions = pipelineService.getVersionResponses(selectedProjectName);
         if (versions.isEmpty()) {
             projectVersion.setVersionNumber(null);
             return false;
