@@ -59,7 +59,7 @@ public class PipelineServiceImplTest {
     }
 
     @Test
-    public void testGetProjectNames() {
+    public void testGetProjects() {
 
         List<ProjectResponse> projects = new ArrayList<ProjectResponse>();
         ProjectResponse project = new ProjectResponse();
@@ -78,7 +78,7 @@ public class PipelineServiceImplTest {
 
     @SuppressWarnings("unchecked")
     @Test(expectedExceptions = PipelineException.class)
-    public void testGetProjectNamesUniformInterfaceException() {
+    public void testGetProjectsUniformInterfaceException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(UniformInterfaceException.class);
         pipelineServiceImpl.getProjectResponses();
@@ -86,14 +86,44 @@ public class PipelineServiceImplTest {
 
     @SuppressWarnings("unchecked")
     @Test(expectedExceptions = PipelineException.class)
-    public void testGetProjectNamesClientHandlerException() {
+    public void testGetProjectsClientHandlerException() {
 
         Mockito.when(projectClient.getProjects()).thenThrow(ClientHandlerException.class);
         pipelineServiceImpl.getProjectResponses();
     }
 
     @Test
-    public void testGetVersionNumbers() {
+    public void testAddProject() {
+
+        String projectName = "test_project";
+        Mockito.when(projectClient.addProject(projectName)).thenReturn(true);
+        boolean response = pipelineServiceImpl.addProject("test_project");
+
+        Assert.assertTrue(response);
+    }
+
+    @Test
+    public void testAddProjectError() {
+
+        String projectName = "test_project";
+        Mockito.when(projectClient.addProject(projectName)).thenReturn(false);
+        boolean response = pipelineServiceImpl.addProject("test_project");
+
+        Assert.assertFalse(response);
+    }
+
+    @Test
+    public void testAddProjectException() {
+
+        String projectName = "test_project";
+        Mockito.when(projectClient.addProject(projectName)).thenThrow(ClientHandlerException.class);
+        boolean response = pipelineServiceImpl.addProject("test_project");
+
+        Assert.assertFalse(response);
+    }
+
+    @Test
+    public void testGetVersions() {
 
         List<VersionResponse> versions = new ArrayList<VersionResponse>();
         VersionResponse version = new VersionResponse();
@@ -112,7 +142,7 @@ public class PipelineServiceImplTest {
 
     @SuppressWarnings("unchecked")
     @Test(expectedExceptions = PipelineException.class)
-    public void testGetVersionNumbersUniformInterfaceException() {
+    public void testGetVersionsUniformInterfaceException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(UniformInterfaceException.class);
         pipelineServiceImpl.getVersionResponses("test");
@@ -120,7 +150,7 @@ public class PipelineServiceImplTest {
 
     @SuppressWarnings("unchecked")
     @Test(expectedExceptions = PipelineException.class)
-    public void testGetVersionNumbersClientHandlerException() {
+    public void testGetVersionsClientHandlerException() {
 
         Mockito.when(versionClient.getVersions(Mockito.anyString())).thenThrow(ClientHandlerException.class);
         pipelineServiceImpl.getVersionResponses("test");

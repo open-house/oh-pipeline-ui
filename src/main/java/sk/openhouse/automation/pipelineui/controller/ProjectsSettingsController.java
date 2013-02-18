@@ -42,8 +42,10 @@ public class ProjectsSettingsController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView postHandler(@ModelAttribute("project") Project project, BindingResult result) {
 
-        // TODO - validate (add hibernate validator)
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("settings/projects");
+
+        // TODO - validate (add hibernate validator)
         if (result.hasErrors()) {
             return mav;
         }
