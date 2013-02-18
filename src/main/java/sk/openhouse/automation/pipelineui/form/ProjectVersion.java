@@ -1,5 +1,8 @@
 package sk.openhouse.automation.pipelineui.form;
 
+/**
+ * @author pete
+ */
 public class ProjectVersion {
 
     private String projectName;

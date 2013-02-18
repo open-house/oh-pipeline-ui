@@ -69,6 +69,20 @@ public class PipelineServiceImpl implements PipelineService {
      * {@inheritDoc}
      */
     @Override
+    public boolean addProject(String projectName) {
+
+        try {
+            return projectClient.addProject(projectName);
+        } catch (ClientHandlerException e) {
+            logger.fatal(String.format("Failed to add %s project.", projectName), e);
+            return false;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<VersionResponse> getVersionResponses(String projectName) {
 
         List<VersionResponse> versions;

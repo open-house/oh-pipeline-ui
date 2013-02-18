@@ -19,6 +19,13 @@ public interface PipelineService {
     List<ProjectResponse> getProjectResponses() throws PipelineException;
 
     /**
+     * @param projectName name of the project to be added
+     * @return true if the project has been added successfully
+     * @throws PipelineException if there was a error while adding the project
+     */
+    boolean addProject(String projectName) throws PipelineException;
+
+    /**
      * @param projectName
      * @return all versions of the specified project
      * @throws PipelineException if the response cannot be retrieved from pipeline service

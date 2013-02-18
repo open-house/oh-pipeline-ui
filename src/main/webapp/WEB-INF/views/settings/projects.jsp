@@ -1,4 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,9 @@
         <div class="content">
 
             <form method="POST">
-                <input type="text" name="project-name" id="project-name" value="" />
+                <spring:bind path="project.name">
+                    <input type="text" name="${status.expression}" id="${status.expression}" value="${status.value}" />
+                </spring:bind>
                 <input type="submit" value="add new project" />
             </form>
 
