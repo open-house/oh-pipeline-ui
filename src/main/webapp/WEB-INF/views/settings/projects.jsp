@@ -10,8 +10,16 @@
 
     <hr />
 
-    <c:forEach items="${projects}" var="project" varStatus="loop">
-        ${project.name}
-        <br />
-    </c:forEach>
+    <table>
+        <c:forEach items="${projects}" var="project" varStatus="loop">
+            <tr>
+                <td>
+                    <a href="${contextPath}/settings/projects/${project.name}">${project.name}</a>
+                </td>
+                <td>
+                    <a href="${contextPath}/settings/versions/${project.name}">versions</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>

@@ -1,14 +1,17 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
-    <form method="POST" action="${contextPath}/settings/project">
-        // TODO - add new version is through versions, this is for changing project name
-        <select name="project-name" id="project-name">
-            <option>TODO</option>
-            <option>TODO2</option>
-        </select>
-        <input type="text" name="version-number" id="version-number" value="" />
-        <input type="submit" value="add new version" />
-    </form>
 
-    <hr />
+    <fieldset>
+        <legend>${projectName}</legend>
+        <form method="POST" action="${contextPath}/settings/projects/${projectName}">
+            <spring:bind path="project.name">
+                <label for="${status.expression}">New Name:</label>
+                <br />
+                <input type="text" name="${status.expression}" id="${status.expression}" value="${status.value}" />
+            </spring:bind>
+            <input type="submit" value="update" />
+        </form>
+    </fieldset>
+
 </body>
