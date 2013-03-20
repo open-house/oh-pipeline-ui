@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
-    <form method="POST">
+    <form method="POST" action="${contextPath}/settings/projects">
         <spring:bind path="project.name">
             <input type="text" name="${status.expression}" id="${status.expression}" value="${status.value}" />
         </spring:bind>

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
-    <form method="POST">
+    <form method="POST" action="${contextPath}/settings/versions">
         <select name="project-name" id="project-name">
             <option value="TODO">TODO</option>
         </select>

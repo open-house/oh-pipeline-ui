@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
-    <form method="POST">
+    <form method="POST" action="${contextPath}/settings/project">
         // TODO - add new version is through versions, this is for changing project name
         <select name="project-name" id="project-name">
             <option>TODO</option>

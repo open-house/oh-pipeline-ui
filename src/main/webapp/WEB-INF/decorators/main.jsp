@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>pipeline</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/screen.css" />
 </head>
 <body>
     <div class="content">

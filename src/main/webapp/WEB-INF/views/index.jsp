@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <body>
 
-        <form class="filter">
+        <form class="filter" method="GET" action="${contextPath}">
             <spring:bind path="projectVersion.projectName">
                 <select id="${status.expression}" name="${status.expression}">
                     <c:forEach items="${projects}" var="project" varStatus="loop">
@@ -26,7 +26,7 @@
             <input type="submit" value="show" />
         </form>
 
-        <a href="/settings" class="settings">settings</a>
+        <a href="${contextPath}/settings" class="settings">settings</a>
 
         <hr />
         <div class="error">${error}</div>

@@ -1,3 +1,3 @@
 <body>
-    <a href="/settings/projects">projects</a>
+    <a href="${contextPath}/settings/projects">projects</a>
 </body>
