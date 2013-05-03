@@ -6,29 +6,12 @@ then
     exit 1
 fi
 
-build(){
-
-    POM=pom.xml
-    BKP_POM=pom.xml_bkp
-    VERSION=$1
-
-    # replace version in pom
-    cp ./$POM ./$BKP_POM
-    sed -i -e "s/\${VERSION}/$VERSION/g" ./$POM
-
-    # create target dir (binaries)
-    mvn clean install cobertura:cobertura
-
-    # revert pom back
-    mv $BKP_POM $POM
-}
-
 VERSION="0.1-$1"
 PACKAGE=oh-pipeline-ui
 TOPDIR=debian
 
 # mvn build
-build $VERSION
+mvn -DVERSION=$VERSION clean install cobertura:cobertura
 
 # clean old deb directory
 rm -rf ./$TOPDIR
