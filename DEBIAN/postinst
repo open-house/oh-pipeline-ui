@@ -1,12 +1,25 @@
 #!/bin/sh
 
-chown tomcat7:tomcat7 /opt/${PACKAGE}/webapps
-chown tomcat7:adm /var/cache/${PACKAGE}
-chgrp tomcat7 /etc/${PACKAGE}/Standalone
-chmod 775 /etc/${PACKAGE}/Standalone
+# change permissions
+chown tomcat6:adm /var/log/${PACKAGE}
+chown tomcat6:adm /var/cache/${PACKAGE}
+chown -R tomcat6:tomcat6 /var/lib/${PACKAGE}/common
+chown -R tomcat6:tomcat6 /var/lib/${PACKAGE}/server
+chown -R tomcat6:tomcat6 /var/lib/${PACKAGE}/shared
 
-ln -s /etc/init.d/oh-tomcat-app /etc/init.d/${PACKAGE}
-ln -s /var/log/${PACKAGE} /opt/${PACKAGE}/logs
-ln -s /etc/${PACKAGE} /opt/${PACKAGE}/conf
-ln -s /var/lib/tomcat7/conf/web.xml /etc/${PACKAGE}/web.xml
-ln -s /var/cache/${PACKAGE} /opt/${PACKAGE}/work
+chown root:tomcat6 /etc/${PACKAGE}/*
+
+# config - share with tomcat installation
+ln -s /etc/tomcat6/catalina.properties /etc/${PACKAGE}/catalina.properties
+ln -s /etc/tomcat6/context.xml /etc/${PACKAGE}/context.xml
+ln -s /etc/tomcat6/logging.properties /etc/${PACKAGE}/logging.properties
+ln -s /etc/tomcat6/policy.d /etc/${PACKAGE}/policy.d
+ln -s /etc/tomcat6/tomcat-users.xml /etc/${PACKAGE}/tomcat-users.xml
+ln -s /etc/tomcat6/web.xml /etc/${PACKAGE}/web.xml
+
+ln -s /etc/${PACKAGE} /var/lib/${PACKAGE}/conf
+ln -s /var/log/${PACKAGE} /var/lib/${PACKAGE}/logs
+ln -s /var/cache/${PACKAGE} /var/lib/${PACKAGE}/work
+
+# create startup script
+ln -s /etc/init.d/tomcat6 /etc/init.d/${PACKAGE}

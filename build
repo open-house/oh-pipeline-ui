@@ -13,21 +13,22 @@ TOPDIR=debian
 # mvn build
 mvn -DVERSION=$VERSION clean install cobertura:cobertura
 
-# clean old deb directory
-rm -rf ./$TOPDIR
-
 # create deb tree
 APP_LOG_DIR=./$TOPDIR/var/log/$PACKAGE
+TOMACT_WORK_DIR=./$TOPDIR/var/cache/$PACKAGE
 APP_CONF_DIR=./$TOPDIR/etc/default
 TOMCAT_CONF_DIR=./$TOPDIR/etc/$PACKAGE
-TOMCAT_WEB_DIR=./$TOPDIR/opt/$PACKAGE/webapps
-TOMACT_WORK_DIR=./$TOPDIR/var/cache/$PACKAGE
+CATALINA_BASE=./$TOPDIR/var/lib/$PACKAGE
+TOMCAT_WEB_DIR=$CATALINA_BASE/webapps
 
 mkdir -p $APP_LOG_DIR
-mkdir -p $APP_CONF_DIR
-mkdir -p $TOMCAT_CONF_DIR/Standalone
-mkdir -p $TOMCAT_WEB_DIR
 mkdir -p $TOMACT_WORK_DIR
+mkdir -p $APP_CONF_DIR
+mkdir -p $TOMCAT_WEB_DIR
+mkdir $TOMCAT_CONF_DIR
+mkdir $CATALINA_BASE/common
+mkdir $CATALINA_BASE/server
+mkdir $CATALINA_BASE/shared
 
 # set dir mode
 find ./$TOPDIR -type d | xargs chmod 755
@@ -38,3 +39,6 @@ cp ./src/main/conf/${PACKAGE} $APP_CONF_DIR
 
 # create deb package
 oh-deb-build $VERSION
+
+# clean old deb directory
+rm -rf ./$TOPDIR

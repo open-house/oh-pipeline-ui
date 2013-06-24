@@ -1,7 +1,16 @@
 #!/bin/sh
 
+# remove config symlinks
+rm -f /etc/${PACKAGE}/catalina.properties
+rm -f /etc/${PACKAGE}/context.xml
+rm -f /etc/${PACKAGE}/logging.properties
+rm -f /etc/${PACKAGE}/policy.d
+rm -f /etc/${PACKAGE}/tomcat-users.xml
+rm -f /etc/${PACKAGE}/web.xml
+
+rm -f /var/lib/${PACKAGE}/conf
+rm -f /var/lib/${PACKAGE}/logs
+rm -f /var/lib/${PACKAGE}/work
+
+# create startup script
 rm -f /etc/init.d/${PACKAGE}
-rm -f /opt/${PACKAGE}/web.xml
-rm -f /opt/${PACKAGE}/logs
-rm -f /opt/${PACKAGE}/conf
-rm -f /opt/${PACKAGE}/work

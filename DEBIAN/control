@@ -3,6 +3,6 @@ Version: ${VERSION}
 Section: httpd
 Priority: optional
 Architecture: all
-Depends: oh-tomcat-app
+Depends: tomcat6
 Maintainer: pete reisinger <p.reisinger@gmail.com>
 Description: web ui for pipeline restful service
